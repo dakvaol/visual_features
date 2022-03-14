@@ -138,7 +138,7 @@ def compute_cos_sim_all(my_array):
     return cos_sim_array
 
 # Combines shot data with visualfeatures
-def combine_data(feature_path, shot_data ,raw_output, final_output):
+def combine_data(feature_path, shot_data , raw_output, pre_norm_output, final_output):
     features_csv_path = Path(feature_path)
     feature_csv = os.listdir(features_csv_path)
     list_of_features = [pd.read_csv(os.path.join(features_csv_path, csv)) for csv in feature_csv]
@@ -173,6 +173,7 @@ def combine_data(feature_path, shot_data ,raw_output, final_output):
     minmax = MinMaxScaler()
     # Standarization
     #movie_standard = scaler.fit_transform(movie_minmax)
+    movie_minmax.to_csv(pre_norm_output, index=False)
     movie_minmax = minmax.fit_transform(movie_minmax)
 
     mdf = pd.DataFrame(movie_minmax, columns=columns)
@@ -188,5 +189,6 @@ if __name__ == "__main__":
     feature_path = os.getenv('MOVIE_FEATURES')
     shot_data = os.getenv('SHOT_DATA')
     raw_output = os.getenv('RAW_FEATURES')
+    pre_norm_output = os.getenv('PRE_NORM_OUTPUT')
     final_output = os.getenv('FINAL_OUTPUT')
-    combine_data(feature_path ,shot_data ,raw_output, final_output)
+    combine_data(feature_path ,shot_data ,raw_output,pre_norm_output , final_output)

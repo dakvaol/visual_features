@@ -68,10 +68,13 @@ def batch_downloads(df, url: str, url_end: str, auth: str, rate):
 if __name__ == "__main__":
     #df = pd.read_csv('../datasets/movie_assets/movie_assets_exposed.csv')
     #assets = get_assets(df['assetId'])
-    env_var = load_dotenv('../.env')
+    env_var = load_dotenv('.env')
     movie_path = os.getenv('TRAILERS')
     movie_assets = os.getenv('MOVIE_ASSETS')
 
+    print(movie_path)
+
+     
     movie_dir = Path(movie_path)
     df = pd.read_csv(movie_assets)
     url = os.getenv('URL')
@@ -85,10 +88,10 @@ if __name__ == "__main__":
     #uri = get_uri(url, os.getenv('AUTH'), 1000)
     #get_video('joker', uri)
     
-    ''' 
-    movie_folder_path = Path("../movie_trailers")
     
-    movie_read = os.listdir(movie_folder_path)
+    #movie_folder_path = movie_dir
+    
+    movie_read = os.listdir(movie_dir)
     
     for x in movie_read:
         try: 
@@ -97,4 +100,4 @@ if __name__ == "__main__":
             logging.debug(f'Keyframes successfully extracted from movie: {x}')
         except Exception:
             logging.debug(f"Invalid filetype for trailer {x}")
-    '''
+    

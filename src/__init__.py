@@ -22,6 +22,7 @@ def initialize(
     raw_output,
     final_output
     ):
+    
     movie_folder_path = Path(trailer_path)
     movie_read = os.listdir(movie_folder_path)
 
@@ -76,16 +77,20 @@ def initialize(
 
     combine_data(feature_output, shot_data_output, raw_output, final_output)
     print(f'Final featurelist successfully outputted to dir {final_output}')
-
+     
     if delete_trailers:
+        print('Made it')
         completed_trailers = pd.read_csv(final_output)
         trailer_list = list(completed_trailers['movie_id'].unique())
 
         for filename in trailer_list:
+            print(f'Filename: {filename}')
+            file_path = Path(os.path.join(trailer_path, str(filename), '.mp4'))
             # Checking if temporary i-frames directory still exists
-            if os.path.exists(os.path.join(trailer_path, str(filename), '.mp4')):
-                # Deletes the directory
-                shutil.rmtree(os.path.join(str(filename), '.mp4'))
+            if os.path.exists(file_path):
+                print('We in')
+                # Deletes the file
+                os.remove(file_path)
         
 
 if __name__ == '__main__':
